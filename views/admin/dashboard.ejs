@@ -1,0 +1,298 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container">
+
+<h1 class="mb-4">
+Admin Dashboard
+</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row g-3 mb-4">
+
+<div class="col-6 col-md-4 col-lg-3">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-people-fill text-primary fs-1"></i>
+<h6 class="mt-2">Total Users</h6>
+<h2><%= totalUsers %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-4 col-lg-3">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-person-badge-fill text-success fs-1"></i>
+<h6 class="mt-2">Drivers</h6>
+<h2><%= totalDrivers %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-4 col-lg-3">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-person-fill text-info fs-1"></i>
+<h6 class="mt-2">Passengers</h6>
+<h2><%= totalPassengers %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-4 col-lg-3">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-signpost-fill text-warning fs-1"></i>
+<h6 class="mt-2">Routes</h6>
+<h2><%= totalRoutes %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-4 col-lg-3">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-play-circle-fill text-success fs-1"></i>
+<h6 class="mt-2">Active Routes</h6>
+<h2><%= activeRoutes %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-4 col-lg-3">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-hourglass-split text-secondary fs-1"></i>
+<h6 class="mt-2">Waiting Routes</h6>
+<h2><%= waitingRoutes %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-4 col-lg-3">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-check-circle-fill text-primary fs-1"></i>
+<h6 class="mt-2">Completed</h6>
+<h2><%= completedRoutes %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-4 col-lg-3">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-x-circle-fill text-danger fs-1"></i>
+<h6 class="mt-2">Cancelled</h6>
+<h2><%= cancelledRoutes %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-6">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-ticket-perforated-fill text-info fs-1"></i>
+<h6 class="mt-2">Bookings</h6>
+<h2><%= totalBookings %></h2>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-md-6">
+<div class="card shadow text-center h-100">
+<div class="card-body">
+<i class="bi bi-currency-rupee text-success fs-1"></i>
+<h6 class="mt-2">Total Earnings</h6>
+<h2>₹<%= totalEarnings %></h2>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="row g-2 mb-4">
+
+<div class="col-6 col-md-3">
+<a href="/admin/users" class="btn btn-primary w-100">
+<i class="bi bi-people-fill"></i>
+Users
+</a>
+</div>
+
+<div class="col-6 col-md-3">
+<a href="/admin/drivers" class="btn btn-success w-100">
+<i class="bi bi-person-badge-fill"></i>
+Drivers
+</a>
+</div>
+
+<div class="col-6 col-md-3">
+<a href="/admin/routes" class="btn btn-warning w-100">
+<i class="bi bi-signpost-fill"></i>
+Routes
+</a>
+</div>
+
+<div class="col-6 col-md-3">
+<a href="/admin/bookings" class="btn btn-info w-100">
+<i class="bi bi-ticket-perforated-fill"></i>
+Bookings
+</a>
+</div>
+
+</div>
+
+<h3 class="mb-3">Users</h3>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover align-middle">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Name</th>
+
+<th>Phone</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% users.forEach(user=>{ %>
+
+<tr>
+
+<td><%= user.username %></td>
+
+<td><%= user.phone %></td>
+
+<td>
+
+<form action="/admin/users/<%= user._id %>?_method=DELETE" method="POST">
+
+<button class="btn btn-danger btn-sm">
+
+<i class="bi bi-trash-fill"></i>
+
+Delete
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+<h3 class="mt-5 mb-3">Routes</h3>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover align-middle">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Driver</th>
+
+<th>Vehicle</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% routes.forEach(route=>{ %>
+
+<tr>
+
+<td><%= route.driver ? route.driver.username : "N/A" %></td>
+
+<td><%= route.vehicleType %></td>
+
+<td>
+
+<% if(route.status=="active"){ %>
+
+<span class="badge bg-success">Active</span>
+
+<% }else if(route.status=="waiting"){ %>
+
+<span class="badge bg-secondary">Waiting</span>
+
+<% }else if(route.status=="completed"){ %>
+
+<span class="badge bg-primary">Completed</span>
+
+<% }else{ %>
+
+<span class="badge bg-danger">Cancelled</span>
+
+<% } %>
+
+</td>
+
+<td>
+
+<form action="/admin/routes/<%= route._id %>?_method=DELETE" method="POST">
+
+<button class="btn btn-danger btn-sm">
+
+<i class="bi bi-trash-fill"></i>
+
+Delete
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>

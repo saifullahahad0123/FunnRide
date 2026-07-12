@@ -1,0 +1,250 @@
+body{
+    background-color: #f5f7fa;
+    font-family: Arial, sans-serif;
+}
+
+
+/* HERO SECTION */
+
+.hero-section{
+    padding: 80px 20px;
+    background: linear-gradient(
+        135deg,
+        #0d6efd,
+        #0a58ca
+    );
+
+    color: white;
+
+    border-radius: 20px;
+
+    margin-top: 30px;
+}
+
+
+/* SEARCH BOX */
+
+.search-box{
+    background-color: white;
+
+    padding: 30px;
+
+    border-radius: 15px;
+}
+
+
+/* TRIP CARDS */
+
+.card{
+    border: none;
+
+    border-radius: 15px;
+
+    transition: 0.3s;
+}
+
+
+.card:hover{
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+
+}
+
+
+/* BUTTONS */
+
+.btn{
+    border-radius: 10px;
+}
+
+
+/* NAVBAR */
+
+.navbar-brand{
+    font-size: 1.5rem;
+}
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .hero-section{
+
+        padding: 50px 20px;
+
+    }
+
+}
+
+.trip-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.trip-actions .btn{
+    flex:1;
+    min-width:150px;
+}
+
+@media(max-width:768px){
+
+    .trip-actions{
+        flex-direction:column;
+    }
+
+    .trip-actions .btn{
+        width:100%;
+    }
+
+    .trip-actions form{
+        width:100%;
+    }
+
+    .trip-actions form .btn{
+        width:100%;
+    }
+
+}
+
+
+@media (max-width: 576px){
+
+.route-actions .btn{
+width:100%;
+margin-bottom:5px;
+}
+
+}
+
+
+.card h2{
+    font-size:2rem;
+    font-weight:bold;
+}
+
+@media (max-width:768px){
+
+.card h2{
+    font-size:1.5rem;
+}
+
+.card h6{
+    font-size:0.9rem;
+}
+
+}
+
+@media (max-width: 768px) {
+
+    .routeRow .col-md-3,
+    .routeRow .col-md-2 {
+
+        margin-bottom: 15px;
+
+    }
+
+    #stops button {
+
+        width: 100%;
+
+    }
+
+}
+.navbar-brand{
+    display:flex;
+    align-items:center;
+    text-decoration:none;
+    gap:10px;
+}
+
+.logo-circle{
+
+    width:42px;
+    height:42px;
+
+    border:1px solid rgba(255,255,255,.9);
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    background:#fff;
+
+}
+
+.logo-circle img{
+
+    width: 60px;
+    height:60px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+.logo-text{
+
+    color:#fff;
+    font-size:24px;
+    font-weight:700;
+
+}
+
+.share-card{
+
+border-radius:25px;
+
+overflow:hidden;
+
+}
+
+.share-card .modal-header{
+
+background:#0d6efd;
+
+color:white;
+
+}
+
+.share-card img{
+
+border:8px solid #f8f9fa;
+
+border-radius:20px;
+
+transition:.3s;
+
+}
+
+.share-card img:hover{
+
+transform:scale(1.05);
+
+}
+
+.share-card button,
+
+.share-card a{
+
+border-radius:50px;
+
+font-weight:600;
+
+}
+
+.share-card input{
+
+text-align:center;
+
+font-weight:bold;
+
+}
