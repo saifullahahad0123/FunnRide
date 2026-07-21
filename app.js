@@ -208,9 +208,22 @@ async(req,res,next)=>{
 
 
 
-// Home Route
 app.get("/", (req, res) => {
-  res.render("home.ejs");
+
+    if (!req.isAuthenticated()) {
+        return res.redirect("/signup");
+    }
+
+    if (req.user.role === "admin") {
+        return res.redirect("/admin/dashboard");
+    }
+
+    if (req.user.role === "driver") {
+        return res.redirect("/driver/dashboard");
+    }
+
+    return res.render("home.ejs");
+
 });
 
 
@@ -1899,50 +1912,45 @@ res.render(
 
 });
 
-app.put("/routes/:id", async(req,res)=>{
 
-const stops = [];
+app.put("/routes/:id", async (req, res) => {
 
-for(
-let i = 0;
-i < req.body.from.length;
-i++
-){
+    const stops = [];
 
-stops.push({
+    for (let i = 0; i < req.body.from.length; i++) {
 
-from:req.body.from[i],
+        stops.push({
 
-to:req.body.to[i],
+            from: req.body.from[i],
 
-fare:req.body.fare[i],
+            to: req.body.to[i],
 
-arrivalTime:req.body.arrivalTime[i]
+            fare: req.body.fare[i],
 
-});
+            arrivalTime: req.body.ArrivalTime[i]
 
-}
+        });
 
-await Route.findByIdAndUpdate(
-req.params.id,
-{
-vehicleType:req.body.vehicleType,
-vehicleNumber:req.body.vehicleNumber,
-contactNumber:req.body.contactNumber,
-totalSeats:req.body.totalSeats,
-availableSeats:req.body.availableSeats,
-stops:stops
-}
-);
+    }
 
-req.flash(
-"success",
-"Route Updated Successfully"
-);
+    await Route.findByIdAndUpdate(
+        req.params.id,
+        {
+            vehicleType: req.body.vehicleType,
+            vehicleNumber: req.body.vehicleNumber,
+            contactNumber: req.body.contactNumber,
+            totalSeats: req.body.totalSeats,
+            availableSeats: req.body.availableSeats,
+            stops: stops
+        }
+    );
 
-res.redirect(
-"/driver/dashboard"
-);
+    req.flash(
+        "success",
+        "Route Updated Successfully"
+    );
+
+    res.redirect("/driver/dashboard");
 
 });
 
