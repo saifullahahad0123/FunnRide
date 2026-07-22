@@ -93,9 +93,9 @@
 
 <div id="locationContainer">
 
-    <div class="locationRow row mb-3">
+    <div class="locationRow row g-2 align-items-center mb-3">
 
-        <div class="col-md-10">
+        <div class="col-10 col-md-11">
 
             <input
                 type="text"
@@ -105,7 +105,7 @@
 
         </div>
 
-        <div class="col-md-2">
+        <div class="col-2 col-md-1">
 
             <button
                 type="button"
@@ -121,39 +121,45 @@
 
 </div>
 
-<div class="mb-3">
+<div class="row g-2 mb-4">
 
-    <button
-        type="button"
-        class="btn btn-secondary"
-        onclick="addLocation()">
+    <div class="col-12 col-md-6">
 
-        <i class="bi bi-plus-circle"></i>
+        <button
+            type="button"
+            class="btn btn-secondary w-100"
+            onclick="addLocation()">
 
-        Add Location
+            <i class="bi bi-plus-circle"></i>
+            Add Location
 
-    </button>
+        </button>
 
-    <button
-        type="button"
-        class="btn btn-primary"
-        onclick="generateRoutes()">
+    </div>
 
-        <i class="bi bi-diagram-3"></i>
+    <div class="col-12 col-md-6">
 
-        Generate Combinations
+        <button
+            type="button"
+            class="btn btn-primary w-100"
+            onclick="generateRoutes()">
 
-    </button>
+            <i class="bi bi-diagram-3"></i>
+            Generate Combinations
+
+        </button>
+
+    </div>
 
 </div>
 
 <hr>
 
-<h4>
-Generated Routes
+<h4 class="mb-3">
+    Generated Routes
 </h4>
 
-<div id="routesContainer"></div>
+<div id="routesContainer" class="mb-3"></div>
 
 <br>
 
