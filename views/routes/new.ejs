@@ -84,92 +84,86 @@
 
                         </div>
 
-                        <hr>
+                    <hr>
 
-                        <h4 class="mb-3">
+<h4 class="mb-3">
+    <i class="bi bi-geo-alt-fill"></i>
+    Route Locations
+</h4>
 
-                            <i class="bi bi-geo-alt-fill"></i> Route Stops
+<div id="locationContainer">
 
-                        </h4>
+    <div class="locationRow row mb-3">
 
-                        <div id="stops">
+        <div class="col-md-10">
 
-    <div id="routesContainer">
+            <input
+                type="text"
+                class="form-control locationInput"
+                placeholder="Enter Location"
+                required>
 
-        <div class="routeRow row mb-3 align-items-center">
+        </div>
 
-            <div class="col-md-3 mb-2">
-                <input
-                    type="text"
-                    name="from[]"
-                    placeholder="From"
-                    class="form-control"
-                    required>
-            </div>
+        <div class="col-md-2">
 
-            <div class="col-md-3 mb-2">
-                <input
-                    type="text"
-                    name="to[]"
-                    placeholder="To"
-                    class="form-control"
-                    required>
-            </div>
+            <button
+                type="button"
+                class="btn btn-danger removeLocation w-100">
 
-            <div class="col-md-2 mb-2">
-                <input
-                    type="number"
-                    name="fare[]"
-                    placeholder="Fare"
-                    class="form-control"
-                    required>
-            </div>
+                <i class="bi bi-x-lg"></i>
 
-            <div class="col-md-2 mb-2">
-                <input
-                    type="text"
-                    name="time[]"
-                    placeholder="2:00 PM"
-                    class="form-control"
-                    required>
-            </div>
-
-            <!-- Remove Button -->
-            <div class="col-md-2 mb-2 text-center">
-                <button
-                    type="button"
-                    class="btn btn-danger removeRoute">
-                    <i class="bi bi-x-lg"></i>
-                </button>
-            </div>
+            </button>
 
         </div>
 
     </div>
 
+</div>
+
+<div class="mb-3">
+
     <button
         type="button"
-        class="btn btn-secondary mt-2"
-        onclick="addRoute()">
+        class="btn btn-secondary"
+        onclick="addLocation()">
 
         <i class="bi bi-plus-circle"></i>
-        Add Route
+
+        Add Location
 
     </button>
 
-    <hr>
+    <button
+        type="button"
+        class="btn btn-primary"
+        onclick="generateRoutes()">
+
+        <i class="bi bi-diagram-3"></i>
+
+        Generate Combinations
+
+    </button>
 
 </div>
-                        <br>
 
-                        <button
-                            type="submit"
-                            class="btn btn-success w-100"
-                        >
+<hr>
 
-                             Create Route
+<h4>
+Generated Routes
+</h4>
 
-                        </button>
+<div id="routesContainer"></div>
+
+<br>
+
+<button
+type="submit"
+class="btn btn-success w-100">
+
+Create Route
+
+</button>
 
                     </form>
 
@@ -186,58 +180,206 @@
 
 
 
+
 <script>
 
-function addRoute() {
+function addLocation(){
 
-    const container = document.getElementById("routesContainer");
+    const container =
+    document.getElementById("locationContainer");
 
-    container.insertAdjacentHTML("beforeend", `
+    const html = `
 
-    <div class="routeRow row mb-3 align-items-center">
+    <div class="locationRow row mb-3">
 
-        <div class="col-md-3 mb-2">
-            <input type="text" name="from[]" placeholder="From" class="form-control" required>
+        <div class="col-md-10">
+
+            <input
+                type="text"
+                class="form-control locationInput"
+                placeholder="Enter Location"
+                required>
+
         </div>
 
-        <div class="col-md-3 mb-2">
-            <input type="text" name="to[]" placeholder="To" class="form-control" required>
-        </div>
+        <div class="col-md-2">
 
-        <div class="col-md-2 mb-2">
-            <input type="number" name="fare[]" placeholder="Fare" class="form-control" required>
-        </div>
+            <button
+                type="button"
+                class="btn btn-danger removeLocation w-100">
 
-        <div class="col-md-2 mb-2">
-            <input type="text" name="time[]" placeholder="2:00 PM" class="form-control" required>
-        </div>
-
-        <div class="col-md-2 mb-2 text-center">
-            <button type="button" class="btn btn-danger removeRoute">
                 <i class="bi bi-x-lg"></i>
+
             </button>
+
         </div>
 
     </div>
 
-    `);
+    `;
+
+    container.insertAdjacentHTML(
+        "beforeend",
+        html
+    );
 
 }
-document.addEventListener("click", function (e) {
 
-    if (e.target.closest(".removeRoute")) {
+document.addEventListener("click",function(e){
 
-        const rows = document.querySelectorAll(".routeRow");
+    if(e.target.closest(".removeLocation")){
 
-        if (rows.length === 1) {
+        const rows =
+        document.querySelectorAll(".locationRow");
 
-            alert("At least one route is required.");
+        if(rows.length===1){
+
+            alert("Minimum one location required.");
 
             return;
 
         }
 
-        e.target.closest(".routeRow").remove();
+        e.target
+        .closest(".locationRow")
+        .remove();
+
+    }
+
+});
+
+
+function generateRoutes() {
+
+    const routesContainer =
+    document.getElementById("routesContainer");
+
+    if(routesContainer.children.length>0){
+
+        if(!confirm("Generate again? Existing generated routes will be removed.")){
+            return;
+        }
+
+    }
+
+    routesContainer.innerHTML="";
+
+    const inputs =
+    document.querySelectorAll(".locationInput");
+
+    let locations = [];
+
+    inputs.forEach(input => {
+
+        if (input.value.trim() !== "") {
+
+            locations.push(input.value.trim());
+
+        }
+
+    });
+
+    if (locations.length < 2) {
+
+        alert("Please add at least 2 locations.");
+
+        return;
+
+    }
+
+    for (let i = 0; i < locations.length - 1; i++) {
+
+        for (let j = i + 1; j < locations.length; j++) {
+
+            routesContainer.insertAdjacentHTML("beforeend", `
+
+            <div class="generatedRoute card p-3 mb-3 shadow-sm">
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-2">
+
+                        <label>From</label>
+
+                        <input
+                            type="text"
+                            name="from[]"
+                            class="form-control"
+                            value="${locations[i]}"
+                            readonly>
+
+                    </div>
+
+                    <div class="col-md-3 mb-2">
+
+                        <label>To</label>
+
+                        <input
+                            type="text"
+                            name="to[]"
+                            class="form-control"
+                            value="${locations[j]}"
+                            readonly>
+
+                    </div>
+
+                    <div class="col-md-2 mb-2">
+
+                        <label>Fare</label>
+
+                        <input
+                            type="number"
+                            name="fare[]"
+                            class="form-control"
+                            placeholder="Fare"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-2 mb-2">
+
+                        <label>Arrival Time</label>
+
+                        <input
+                            type="text"
+                            name="time[]"
+                            class="form-control"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-2 mb-2 d-flex align-items-end">
+
+                        <button
+                            type="button"
+                            class="btn btn-danger w-100 removeGenerated">
+
+                            <i class="bi bi-x-lg"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `);
+
+        }
+
+    }
+
+}
+
+// Remove Generated Route
+document.addEventListener("click", function (e) {
+
+    if (e.target.closest(".removeGenerated")) {
+
+        e.target
+        .closest(".generatedRoute")
+        .remove();
 
     }
 

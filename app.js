@@ -206,9 +206,19 @@ async(req,res,next)=>{
 
 });
 
+app.get("/home", (req, res) => {
 
+    if (!req.isAuthenticated()) {
+        return res.redirect("/signup");
+    }
+
+    res.render("home");
+
+});
 
 app.get("/", (req, res) => {
+
+    console.log(req.user);
 
     if (!req.isAuthenticated()) {
         return res.redirect("/signup");
@@ -222,7 +232,7 @@ app.get("/", (req, res) => {
         return res.redirect("/driver/dashboard");
     }
 
-    return res.render("home.ejs");
+    return res.render("home");
 
 });
 
@@ -1774,6 +1784,8 @@ message:
 
 });
 
+
+
 req.flash(
 "success",
 "Seat Booked Successfully"
@@ -2030,6 +2042,7 @@ message:`Your booking from ${booking.fromPlace} to ${booking.toPlace} has been c
 
 });
 
+
 }
 
 // Restore seats
@@ -2161,7 +2174,7 @@ req.flash(
 "Something went wrong."
 );
 
-res.redirect("driver/passengers.ejs");
+res.redirect("driver/passengers");
 
 }
 
@@ -2354,9 +2367,20 @@ io.on(
 
     (socket) => {
 
+
+
+
         console.log(
             "User Connected"
         );
+
+        socket.on("join", (userId) => {
+
+        socket.join(userId);
+
+        console.log("User joined room:", userId);
+
+    });
   
         // Chat Messages
 
