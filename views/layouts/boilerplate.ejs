@@ -426,5 +426,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </script>
 
+<script>
+
+async function autoComplete(inputId,listId){
+
+const input=document.getElementById(inputId);
+
+const list=document.getElementById(listId);
+
+input.addEventListener("keyup",async()=>{
+
+const q=input.value;
+
+if(q.length<1){
+
+list.innerHTML="";
+
+return;
+
+}
+
+const res=await fetch("/locations?q="+q);
+
+const data=await res.json();
+
+list.innerHTML="";
+
+data.forEach(location=>{
+
+const item=document.createElement("a");
+
+item.className="list-group-item list-group-item-action";
+
+item.innerText=location;
+
+item.onclick=function(){
+
+input.value=location;
+
+list.innerHTML="";
+
+}
+
+list.appendChild(item);
+
+});
+
+});
+
+}
+
+autoComplete("fromInput","fromSuggestions");
+
+autoComplete("toInput","toSuggestions");
+
+</script>
+
 </body>
 </html>

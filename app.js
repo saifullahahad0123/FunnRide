@@ -1666,6 +1666,41 @@ to
 });
 
 
+app.get("/locations", async (req, res) => {
+
+    const keyword = req.query.q || "";
+
+    if (!keyword) return res.json([]);
+
+    const routes = await Route.find({}, "stops");
+
+    const locations = new Set();
+
+    routes.forEach(route => {
+
+        route.stops.forEach(stop => {
+
+            locations.add(stop.from);
+
+            locations.add(stop.to);
+
+        });
+
+    });
+
+    const result = [...locations].filter(location =>
+
+        location.toLowerCase().startsWith(
+            keyword.toLowerCase()
+        )
+
+    );
+
+    res.json(result);
+
+});
+
+
 
 app.post(
 "/routes/:id/book",
